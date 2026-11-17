@@ -1,3 +1,4 @@
+import { createRegistrationHandler } from "./registration";
 import cookieParser from "cookie-parser";
 import express from "express";
 import { randomUUID } from "node:crypto";
@@ -27,7 +28,6 @@ import {
   ImportCourseSchema,
   LoginSchema,
   ProgressSchema,
-  RegisterSchema,
   UpdateCourseSchema,
 } from "./schemas";
 import type { CourseRow, DbUser, ItemRow, ProgressRow } from "./types";
@@ -96,33 +96,9 @@ app.get("/api/auth/me", (req, res) => {
   res.json({ user: req.user ?? null });
 });
 
-app.post("/api/auth/register", asyncHandler(async (req, res) => {
-  const body = parseBody(RegisterSchema, req.body, res);
-  if (!body) return;
-
-  const existing = await queryOne<DbUser>("SELECT * FROM users WHERE email = $1", [
-    body.email.toLowerCase(),
-  ]);
-  if (existing) {
-    return res.status(409).json({ error: "这个邮箱已经注册" });
-  }
-
-  const userCount = await queryOne<{ count: string }>("SELECT COUNT(*) as count FROM users");
-  const userId = randomUUID();
-  const role = Number(userCount?.count ?? 0) === 0 ? "admin" : "student";
-
-  await execute(
-    `
-      INSERT INTO users (id, email, name, password_hash, role)
-      VALUES ($1, $2, $3, $4, $5)
-    `,
-    [userId, body.email.toLowerCase(), body.name, hashPassword(body.password), role],
-  );
-
-  await createSession(res, userId);
-  const user = await queryOne<DbUser>("SELECT * FROM users WHERE id = $1", [userId]);
-  return res.status(201).json({ user: mapUser(user!) });
-}));
+app.post("/api/auth/register", asyncHandler(createRegistrationHandler({
+  queryOne, execute, mapUser, createSession, hashPassword,
+})));
 
 app.post("/api/auth/login", asyncHandler(async (req, res) => {
   const body = parseBody(LoginSchema, req.body, res);
@@ -808,7 +784,7 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
 initDb()
   .then(() => {
     app.listen(port, host, () => {
-      console.log(`MeowEnglish API running at http://${host}:${port}`);
+      console.log(`Good English API running at http://${host}:${port}`);
     });
   })
   .catch((error) => {

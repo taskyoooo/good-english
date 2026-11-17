@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: meowenglish-api
+    name: good-english-api
     runtime: node
     plan: free
     region: singapore

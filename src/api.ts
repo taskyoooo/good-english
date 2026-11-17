@@ -12,9 +12,18 @@ type ApiOptions = RequestInit & {
 };
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ?? "";
+export const IS_DEMO = import.meta.env.VITE_DEMO_MODE === "true";
 const isGitHubPages = window.location.hostname.endsWith("github.io");
 
 async function api<T>(path: string, options: ApiOptions = {}): Promise<T> {
+  if (IS_DEMO) {
+    if (path === "/api/auth/me") return { user: null } as T;
+    if (path === "/api/courses") {
+      const { courses } = await import("./data/courses");
+      return { courses } as T;
+    }
+    throw new Error("公开演示使用本地学习模式，账号和云端管理需部署后端后启用。");
+  }
   if (!API_BASE_URL && isGitHubPages) {
     throw new Error("线上后端地址还没配置：请设置 VITE_API_BASE_URL 后重新部署 GitHub Pages");
   }

@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  IS_DEMO,
   getCourses,
   getWrongBook,
   deleteResource,
@@ -55,7 +56,7 @@ import type {
   PracticeMode,
 } from "./types";
 
-const STORAGE_KEY = "meowenglish:attempts";
+const STORAGE_KEY = "goodenglish:attempts";
 const WRONG_BOOK_ID = "wrong-book";
 const CHAPTER_SIZE = 50;
 const fallbackCourses = emptyCourses;
@@ -768,7 +769,7 @@ export default function App() {
             <Languages size={22} />
           </div>
           <div>
-            <h1>MeowEnglish</h1>
+            <h1>Good English</h1>
             <p>Translate · Type · Remember</p>
           </div>
         </div>
@@ -903,6 +904,8 @@ export default function App() {
                 </div>
               )}
             </div>
+          ) : IS_DEMO ? (
+            <span className="demo-account">本地体验</span>
           ) : (
             <button
               className="account-button"
@@ -917,6 +920,14 @@ export default function App() {
           )}
         </div>
       </header>
+
+      {IS_DEMO && (
+        <aside className="demo-notice" aria-label="演示说明">
+          <strong>Good English 公开演示</strong>
+          <span>无需注册即可练习。错题和学习记录仅保存在当前浏览器；云端账号及后台尚未接入。</span>
+          <a href="https://github.com/taskyoooo/good-english" target="_blank" rel="noreferrer">项目与来源</a>
+        </aside>
+      )}
 
       {appError && (
         <button className="toast" onClick={() => setAppError("")}>

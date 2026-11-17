@@ -1770,3 +1770,9 @@ button:disabled {
     flex-direction: column;
   }
 }
+
+/* Public demonstration: no simulated authentication or cloud persistence. */
+.demo-notice { display:flex; align-items:center; flex-wrap:wrap; gap:8px 18px; padding:12px 18px; margin:12px 0; border:1px solid #cbdde8; border-radius:12px; background:#eef6fa; color:#234657; font-size:13px; line-height:1.7; overflow-wrap:anywhere; }
+.demo-notice strong { color:#173a50; }
+.demo-notice a { color:#245a78; margin-left:auto; white-space:nowrap; }
+.demo-account { padding:9px 12px; border-radius:8px; background:#edf3f6; color:#345366; font-size:13px; white-space:nowrap; }

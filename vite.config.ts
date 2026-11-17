@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  base: "/MeowEnglish/",
+  base: process.env.VITE_BASE_PATH ?? "/good-english/",
   plugins: [react()],
   server: {
     proxy: {
