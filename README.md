@@ -1,12 +1,14 @@
 # Good English
 
+[公开演示](https://taskyoooo.github.io/good-english/) · [源码仓库](https://github.com/taskyoooo/good-english)
+
 Good English 是基于 [Mi0uno/MeowEnglish](https://github.com/Mi0uno/MeowEnglish) 的二次开发版本，由 TASKYO 维护，并非全新原创项目。依据维护者确认的作者授权使用；上游未提供通用开源许可证，详见 [权利说明](LICENSE.md) 和 [来源清单](THIRD_PARTY_NOTICES.md)。
 
 公开演示采用浏览器本地学习模式，无需登录；云端账号和后台须另行部署后端。参见 [部署与验证说明](DEPLOYMENT.md)。
 
 **一个把单词、句子翻译和键盘输入练习合在一起的英语学习工具。**
 
-MeowEnglish 借鉴了 qwerty-learner 的即时输入反馈体验，也吸收了 earthworm 通过中文提示练英文表达的训练思路。它不是单纯背单词，而是让学习者看到中文意思后，用键盘完整输入英文答案，逐字获得正确/错误反馈。
+本项目的上游 MeowEnglish 借鉴了 qwerty-learner 的即时输入反馈体验，也吸收了 earthworm 通过中文提示练英文表达的训练思路。它不是单纯背单词，而是让学习者看到中文意思后，用键盘完整输入英文答案，逐字获得正确/错误反馈。
 
 ![React](https://img.shields.io/badge/React-18.3-61dafb?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6?style=flat-square)
@@ -117,7 +119,7 @@ GitHub Pages 只能托管前端静态文件，不能运行 Express 后端，也�
 
 ```bash
 DATABASE_URL=你的 Neon 连接串
-CORS_ORIGIN=https://mi0uno.github.io
+CORS_ORIGIN=https://taskyoooo.github.io
 NODE_ENV=production
 ```
 
@@ -197,7 +199,7 @@ VITE_API_BASE_URL=https://你的后端域名
 ## 项目结构
 
 ```text
-MeowEnglish/
+good-english/
 ├─ src/
 │  ├─ App.tsx              # 主界面、练习流程、后台弹窗
 │  ├─ api.ts               # 前端 API 客户端
